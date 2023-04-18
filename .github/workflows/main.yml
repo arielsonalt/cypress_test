@@ -1,0 +1,28 @@
+name: Daily Cypress Test for YouTube
+on:
+  schedule:
+    - cron: '* * * * *' # Run every day at 6 o'clock
+jobs:
+  run-cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install dependencies
+        run: npm install
+      - name: Run Cypress test
+        run: npm run test
+        env:
+          CYPRESS_baseUrl: 'https://www.youtube.com'
+          CYPRESS_searchTerm: 'cypress test'
+          CYPRESS_browser: 'chrome'
+          CYPRESS_headless: true
+      - name: Send test results to Google Chat
+        uses: google-github-actions/chat@v1
+        with:
+          webhook_url: 'https://chat.googleapis.com/v1/spaces/AAAAQ1aHhUM/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MOXTX1ZIOiRax89uG7flYNu3o4TWRtV16iEA9QGotOw%3D'
+          message: 'Cypress test for YouTube is complete!'
+          cards: '[{"sections":[{"widgets":[{"textParagraph":{"text":"Cypress test for YouTube is complete!"},"image":{"imageUrl":"https://i.imgur.com/12345.png","altText":"Test result screenshot"}}]}]}]'

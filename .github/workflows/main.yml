@@ -15,6 +15,8 @@ jobs:
           node-version: '14.x'
       - name: Install dependencies
         run: npm install
+      - name: Build
+        run: npm run build
       - name: Run Cypress test
         run: npm run test
         env:

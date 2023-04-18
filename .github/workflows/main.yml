@@ -22,6 +22,17 @@ jobs:
           CYPRESS_searchTerm: 'cypress test'
           CYPRESS_browser: 'chrome'
           CYPRESS_headless: true
+          
+      - name: Google Chat Text Message
+        # You may pin to the exact commit or the version.
+        # uses: teknatha136/actions-google-chat-text-message@a2dde6cd5809a2d4bc328b6096c1ad3027b25dbf
+        uses: teknatha136/actions-google-chat-text-message@v1.0.0
+        with:
+          # The webhook for space you want to send message to. Docs https://developers.google.com/chat/how-tos/webhooks#create_a_webhook
+          google-chat-webhook: 'https://chat.googleapis.com/v1/spaces/AAAAQ1aHhUM/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MOXTX1ZIOiRax89uG7flYNu3o4TWRtV16iEA9QGotOw%3D'
+          # Actual message you want to send.
+          text-message: '[{"sections":[{"widgets":[{"textParagraph":{"text":"Cypress test for YouTube is complete!"},"image":{"imageUrl":"https://i.imgur.com/12345.png","altText":"Test result screenshot"}}]}]}]'
+      
       - name: Send test results to Google Chat
         uses: google-github-actions/chat@v1
         with:

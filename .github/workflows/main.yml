@@ -1,7 +1,7 @@
 name: Daily Cypress Test for YouTube
 on:
   schedule:
-    - cron: '* * * * *' # Run every day at 6 o'clock
+    - cron: '* * * * * *' # Run every day at 6 o'clock
 jobs:
   run-cypress:
     runs-on: ubuntu-latest

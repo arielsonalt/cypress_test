@@ -19,6 +19,8 @@ jobs:
         run: npm run build
       - name: Run Cypress test
         run: npm run test
+      - run: npm ci
+      - run: npm run test:teste_youtube
         env:
           CYPRESS_baseUrl: 'https://www.youtube.com'
           CYPRESS_searchTerm: 'cypress test'

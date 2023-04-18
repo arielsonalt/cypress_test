@@ -1,7 +1,9 @@
 name: Daily Cypress Test for YouTube
 on:
-  schedule:
-    - cron: '0 6 * * *' # Run every day at 6 o'clock
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 jobs:
   run-cypress:
     runs-on: ubuntu-latest

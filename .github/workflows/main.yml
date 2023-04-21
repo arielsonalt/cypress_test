@@ -14,20 +14,19 @@ jobs:
         with:
           node-version: '16.x'
           cache: 'npm'
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      - name: Run Cypress test
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar teste funcional Cypress
         run: npm run test
-      - run: npm ci
-      - run: npm run test:teste_youtube
-        env:
-          CYPRESS_baseUrl: 'https://www.youtube.com'
-          CYPRESS_searchTerm: 'cypress test'
-          CYPRESS_browser: 'chrome'
-          CYPRESS_headless: true
-      - name: Send test results to Google Chat
-        run: |
-          npm install google-chat-bot@latest
-          node -e 'const { Chat } = require("google-chat-bot"); const chat = new Chat("https://chat.googleapis.com/v1/spaces/AAAAQ1aHhUM/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MOXTX1ZIOiRax89uG7flYNu3o4TWRtV16iEA9QGotOw%3D"); chat.sendMessage("Cypress test for YouTube is complete!", { imageUrl: "https://i.imgur.com/12345.png", altText: "Test result screenshot" });'
+
+      - name: Enviar resultado para o Google Chat
+        uses: google-github-actions/chat@v1.1.0
+        with:
+          webhook-url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          message: |
+            Teste Funcional Cypress concluído:
+            - Resultado: ${{ job.status }}
+            - Commit: ${{ github.sha }}
+            - Autor: ${{ github.actor }}
+            - URL do Action: ${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}
